@@ -55,8 +55,10 @@ void fillStack(line *s, long long int slo, long long int horIn){
 	return;
 }
 int main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(static_cast<ostream*>(0));
 	short int flag, count,flag1,flag2;
-	long long int k,n,l,ptrA,ptrB,orderA=0,orderB=0,k1,j,ind1,ind2;
+	long long int k,n,l,ptrA,ptrB,orderA=0,orderB=0,k1,j,ind1,ind2,endptrA,endptrB,i;
 	long double x1,x2,t;
 	//prevInter holds the previous time that 2 lines intersect
 	cin >> n >>l>>k1;
@@ -64,11 +66,11 @@ int main(){
 	input *inB= new input [n];
 	line *stackA = new line [n];
 	line *stackB = new line [n];
-	for (long long int i=0; i<n; i++){
+	for (i=0; i<n; i++){
 		cin>>inA[i].t>>inA[i].u;
 		inA[i].relevant=1;
 	}
-	for (long long int i=0; i<n; i++){
+	for (i=0; i<n; i++){
 			cin>>inB[i].t>>inB[i].u;
 			inB[i].relevant=1;
 	}
@@ -76,7 +78,7 @@ int main(){
 		flag=0; 
 
 		//find for each section which particle from A is first O(n)
-		for (long long int i=0; i<n; i++){
+		for ( i=0; i<n; i++){
 			stackA[i].order=0;
 			stackB[i].order=0;
 			if(inA[i].relevant){
@@ -86,10 +88,10 @@ int main(){
 				fillStack(stackA,particle.slope,particle.horizIntersect);
 			}
 		}
-		long long int i;
-		ptrA=0;long long int endptrA=top;
+
+		ptrA=0; endptrA=top;
 		//find for each section which particle from B is first O(n)
-		for (long long int i=0; i<n; i++){
+		for (i=0; i<n; i++){
 			if(inB[i].relevant){
 				particle.order=i+1;
 				particle.slope=-inB[i].u;
@@ -98,12 +100,9 @@ int main(){
 			}
 		}
 		ptrB=top;
-		long long int endptrB=top;
-
-		i=0 ; 
-        long long int k=0;
+		endptrB=top;
+        k=0;
 		long double *time = new long double [endptrB+endptrA+2];
-
         i=0;
         j=0;
         // merge the 2 arrays to 1 (asc)
