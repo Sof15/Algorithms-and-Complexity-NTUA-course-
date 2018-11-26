@@ -1,0 +1,362 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english, greek]{babel}
+\usepackage[LGR]{fontenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{slashbox}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\usepackage{gensymb}
+\usepackage{amssymb}
+\usepackage[top=2cm,bottom=2cm, left=1.5cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{moreenum}
+\usepackage{forest}
+\usepackage[margin=5 pt]{subcaption}
+\useshorthands{;}
+\defineshorthand{;}{?}
+\usepackage{float}
+\usepackage{tkz-fct}
+\usetkzobj{all}
+\graphicspath{ {images/} }
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{xcolor}
+\tikzstyle{startstop}=[rectangle, rounded corners,minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!20]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!10]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=yellow!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\lstset{
+      language=Verilog,
+    basicstyle=\small\selectlanguage{english}\ttfamily,
+   % keywordstyle=\color{vblue},
+    identifierstyle=\color{black},
+    commentstyle=\color{vgreen},
+    numbers=left,
+    numberstyle=\tiny\color{black},
+    numbersep=10pt,
+    tabsize=8,
+    moredelim=*[s][\colorIndex]{[}{]},
+    literate=*{:}{:}1
+}
+
+
+\makeatletter
+\newcommand*\@lbracket{[}
+\newcommand*\@rbracket{]}
+\newcommand*\@colon{:}
+\newcommand*\colorIndex{%
+    \edef\@temp{\the\lst@token}%
+    \ifx\@temp\@lbracket \color{black}%
+    \else\ifx\@temp\@rbracket \color{black}%
+    \else\ifx\@temp\@colon \color{black}%
+    \else \color{black}%
+    \fi\fi\fi
+}
+\makeatother
+
+\usepackage{trace}
+\tikzset{
+  my blue box/.style={fill=gray!20, rectangle, rounded corners=2pt},
+}
+\forestset{
+  my blue label/.style={
+    label={[my blue box]above:#1},
+   % s sep+=10pt,
+  }
+}
+\begin{document}
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+
+\center 
+
+\textsc{\LARGE Εθνικό Μετσόβιο Πολυτεχνείο}\\[1.5cm] 
+\textsc{\large ΗΛΕΚΤΡΟΛΟΓΩΝ ΜΗΧΑΝΙΚΩΝ ΚΑΙ ΜΗΧΑΝΙΚΩΝ ΥΠΟΛΟΓΙΣΤΩΝ}\\[1.5cm] 
+\includegraphics[scale=0.4]{ntua.png}\\[2cm] 
+\textsc{\Large Τεχνητή Νοημοσύνη}\\[1cm] 
+\hfill \break
+
+\HRule \\[0.4cm]
+{ \huge \bfseries 1η Γραπτή Σειρά Ασκήσεων }\\[0.4cm] 
+\HRule \\[1.5cm]
+ 
+\hfill \break
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\centering  Γαλανάκη Σοφία\\
+\centering 03115060
+\end{flushleft}
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+
+\end{minipage}\\[2.5cm]
+
+{\large \today}\\[2cm] 
+
+\vfill 
+
+\end{titlepage}
+\begin{itemize}[label=$\blacktriangleright$]
+\item \textbf{Άσκηση 1}\\
+\begin{enumerate}
+\item Εκτέλεση αλγορίθμου \textlatin{Hill Climbing}\\
+\begin{table}[H]
+\begin{tabular}{cccc}
+Μέτωπο Αναζήτησης & Κατάσταση & Παιδιά    & Ευριστική                                    \\
+$<(s,9)>$      & $s$       & $<b,c,d>$ & $b\rightarrow6,c\rightarrow4, d\rightarrow5$ \\
+$<(c,4)>$         & $c$       & $<h>$     & $h\rightarrow5$                              \\
+\end{tabular}
+\end{table}
+Εκτέλεση αλγορίθμου \textlatin{Best First}\\
+\begin{table}[H]
+\begin{tabular}{ccccc}
+Μέτωπο Αναζήτησης     & Κλειστό Σύνολο  & Κατάσταση & Παιδιά    & Ευριστική                                     \\
+$<(s,9)>$             & $<>$           & $s$       & $<b,c,d>$ & $b\rightarrow6 ,c\rightarrow4, d\rightarrow5$ \\
+$<(c,4),(d,5),(b,6)>$ & $<s>$         & $c$       & $<h>$     & $h\rightarrow5$                               \\
+$<(d,5),(h,5),(b,6)>$ & $<s,c>$       & $d$       & $<h,i>$   & $h\rightarrow5, i\rightarrow3$                \\
+$<(i,3),(h,5),(b,6)>$ & $<s,c,d>$     & $i$       & $<j>$     & $j\rightarrow3$                               \\
+$<(j,3),(h,5),(b,6)>$ & $<s,c,d,i>$   & $j$       & $<g>$     & $g\rightarrow0$                               \\
+$<(g,0),(h,5),(b,6)>$ & $<s,c,d,i,j>$ & $g$       &           &                                               \\
+                      &                 &           &           &                                              
+\end{tabular}
+
+\end{table}
+Εκτέλεση αλγορίθμου $Α^{*}$\\
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{cccccc}
+Μέτωπο Αναζήτησης               & Κλειστό Σύνολο        & Κατάσταση & Παιδιά    & $G$                                           & $F$                                           \\
+$<(s,0)>$                       & $<>$                  & $s$       & $<b,c,d>$ & $b\rightarrow5, c\rightarrow2, d\rightarrow2$ & $b\rightarrow11, c\rightarrow6,d\rightarrow7$ \\
+$<(c,6),(d,7),(b,11)>$          & $<s>$                 & $c$       & $<h>$   & $h\rightarrow8$               & $h\rightarrow13$              \\
+$(d,7),(b,11),(h,13)>$   & $<s,c>$               & $d$       & $<h,i>$     & $h\rightarrow10,i\rightarrow8$                               & $h\rightarrow15,i\rightarrow11$                              \\
+$<(b,11),(i,11),(h,13)>$        & $<s,c,d>$             & $b$       & $<e,k>$   & $e\rightarrow9, k\rightarrow7$                & $e\rightarrow14, k\rightarrow9$               \\
+$<(k,9),(i,11),(h,13),(e,14)>$  & $<s,c,d,b>$           & $k$       & $<g,h>$   & $g\rightarrow18, h\rightarrow8$               & $g\rightarrow18, h\rightarrow13$              \\
+$<(i,11),(h,13),(e,14),(g,18)>$ & $<s,c,d,b,k>$         & $i$       & $<j>$     & $j\rightarrow12$                              & $j\rightarrow15$                              \\
+$<(h,13),(e,14),(j,15),(g,18)>$ & $<s,c,d,b,k,i>$       & $h$       & $<i,j>$   & $i\rightarrow11, j\rightarrow15$              & $i\rightarrow14, j\rightarrow18$              \\
+$<(e,14),(j,15),(g,18)>$        & $<s,c,d,b,k,i,h>$     & $e$       & $<g>$     & $g\rightarrow18$                              & $g\rightarrow18$                              \\
+$<(j,15),(g,18)>$               & $<s,c,d,b,k,i,h,e>$   & $j$       & $<g>$     & $g\rightarrow14$                              & $g\rightarrow14$                              \\
+$<(g,14)>$                      & $<s,c,d,b,k,i,h,e,j>$ & $g$       &           &                                               &                                              
+\end{tabular}%
+}
+\end{table}
+\item Το πρόβλημα έχει 9 λύσεις που είναι οι ακόλουθες:
+\begin{itemize}
+\item $s\rightarrow b\rightarrow e\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 18
+\item $s\rightarrow b\rightarrow k\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 18
+\item $s\rightarrow b\rightarrow k\rightarrow h\rightarrow j\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 17
+\item $s\rightarrow b\rightarrow k\rightarrow h\rightarrow i\rightarrow j\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 17
+\item $s\rightarrow c\rightarrow h\rightarrow j\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 17
+\item $s\rightarrow c\rightarrow h\rightarrow i\rightarrow j\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 17
+\item $s\rightarrow d \rightarrow h\rightarrow j\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 19
+\item $s\rightarrow d \rightarrow h\rightarrow i\rightarrow j\rightarrow g$\\
+Συνολικό πραγματικό κόστος: 19
+\item $s\rightarrow d \rightarrow i\rightarrow j \rightarrow g$\\
+Συνολικό πραγματικό κόστος: 14
+\end{itemize}
+Από τα παραπάνω συμπεραίνουμε ότι η βέλτιστη λύση είναι η $s\rightarrow d \rightarrow i\rightarrow j \rightarrow g$ καθώς έχει το μικρότερο συνολικό πραγματικό κόστος.\\
+Από τους παραπάνω αλγορίθμους μόνο ο $Hill \ Climbing$ δε βρίσκει λύση.\\
+Το πρόβλημα του πρώτου αλγορίθμου είναι ότι αυτός χρησιμοποιεί μόνο τις ευριστικές τιμές και όπως φάνηκε εκ του αποτελέσματος, αυτές δεν είναι και τόσο καλές.\\
+Επίσης οι αλγόριθμοι Α* και $best \ first$ δίνουν τη βέλτιστη λύση.\\
+Στον γράφο που περιγράφει τις καταστάσεις του χώρου αναζήτησης παρατηρούμε ότι σε οποιαδήποτε κατάσταση και αν βρεθούμε υπάρχει κατευθυνόμενο μονοπάτι που να μας οδηγεί στην τελική κατάσταση ($g$). Επομένως κάθε αλγόριθμος θα βρει λύση ακόμα και αν αυτή δεν είναι η βέλτιστη.
+\end{enumerate}
+\item
+\begin{enumerate}
+\item Εφαρμόζοντας τον αλγόριθμο \textlatin{Minimax} προκύπτει το ακόλουθο δέντρο.\\
+\hfill \break
+\begin{forest}
+for tree={circle,draw,l sep=1cm, s sep =0.2 cm,minimum size=1em},
+[$4$, my blue label=1
+    [$3$, my blue label=2
+      [$4$ , my blue label=5
+        [$4$, my blue label=11
+        	[$6$, my blue label=23]
+        	[$4$, my blue label=24]
+        ]
+        [$2$, my blue label=12, for tree={l sep=3cm}
+        	[$2$, my blue label=25]
+        	[$9$, my blue label=26]
+        	[$6$, my blue label=27]
+        ]
+      ]
+      [$3$ , my blue label=6
+        [$2$, my blue label=13
+        	[$3$, my blue label=28]
+        	[$2$, my blue label=29]
+        ]
+        [$1$, my blue label=14, for tree={l sep=3cm}
+        	[$1$, my blue label=30]
+        ]
+        [$3$, my blue label=15
+        	[$5$, my blue label=31]
+        	[$3$, my blue label=32]
+        ]
+	]
+    ]
+    [$1$, my blue label=3
+      [$1$, my blue label=7
+        [$1$, my blue label=16, for tree={l sep=3cm}
+        	[$3$, my blue label=33]
+        	[$1$, my blue label=34]
+        	[$8$, my blue label=35]
+        ]
+	]
+      [$5$, my blue label=8
+        [$5$, my blue label=17
+        	[$5$, my blue label=36]
+        	[$6$, my blue label=37]
+        ]
+	]
+  ] 
+   [$4$, my blue label=4
+      [$4$, my blue label=9
+        [$4$, my blue label=18, for tree={l sep=3cm}
+        	[$8$, my blue label=38]
+        	[$4$, my blue label=39]
+        	[$6$, my blue label=40]
+        ]
+        [$2$, my blue label=19
+        	[$2$, my blue label=41]
+        	[$9$, my blue label=42]
+        ]
+	]
+      [$4$, my blue label=10
+        [$4$, my blue label=20,for tree={l sep=3cm}
+        	[$4$, my blue label=43]
+        	[$9$, my blue label=44]
+        ]
+        [$3$, my blue label=21
+        	[$5$, my blue label=45]
+        	[$3$, my blue label=46]
+        ]
+        [$1$, my blue label=22, for tree = {l sep=3cm}
+        	[$3$, my blue label=47]
+        	[$1$, my blue label=48]
+        	[$2$, my blue label=49]
+        ]
+	]
+  ]
+]
+\end{forest}
+\newpage
+\item Εφαρμόζοντας τον αλγόριθμο ΑΒ προκύπτει το ακόλουθο δέντρο.
+\\
+\hfill \break
+Αρχικά, πάμε στο αριστερότερο κλαδί και επισκεπτόμαστε τους κόμβους 23,24 με τιμές $6,4$ και άρα ο κόμβος 11 παίρνει την τιμή 4.\\
+Ύστερα, επισκεπτόμαστε στο δεύτερο κλαδί τον κόμβο 25 με τιμή $2$ και επειδή το $min$ αυτού του κλαδιού δε μπορεί να είναι μεγαλύτερο από 2, ισχύει ότι το $min$ αυτό δε θα είναι σε καμία περίπτωση μεγαλύτερο από την τιμή 4 που δώσαμε στον κόμβο 11. Άρα και ο κόμβος 5 παίρνει την τιμή 4.\\
+Στη συνέχεια επισκεπτόμαστε τους κόμβους 28,29 με τιμές 3,2 και βάζουμε στον κόμβο 13 την τιμή 2. Μετά επισκεπτόμαστε τον κόμβο 30 με τιμή 1 και βάζουμε στον κόμβο 14 την τιμή 1. Αντίστοιχα και για τους κόμβους 31,32 και 15. Ο τελευταίος παίρνει την τιμή 3. Επομένως ο κόμβος 6 παίρνει την τιμή 3 και ο 2 την τιμή 4.\\
+Προχωράμε στο επόμενο υπόδεντρο και επισκεπτόμαστε τον κόμβο 33 με τιμή 3, οπότε ο κόμβος 16 θα έχει τιμή το πολύ 3. Αυτό σημαίνει ότι ο κόμβος 3 θα πάρει τιμή το πολύ 3. \\
+Έπειτα επισκεπτόμαστε τους κόμβους 38,39,40 με τιμές 8,4,6 και βάζουμε στον κόμβο 18 την τιμή 4. Επισκεπτόμαστε τους κόμβους 41 με τιμή 2 και άρα ο κόμβος 19 θα έχει τιμή το πολύ 2 και επομένως ο κόμβος 9 θα πάρει την τιμή 4.\\
+Επισκεπτόμαστε τους κόμβους 43,44 με τιμές 4,9 και βάζουμε στον κόμβο 20 την τιμή 4. Αυτό σημαίνει ότι κόμβος 10 θα έχει τιμή τουλάχιστον 4 και συνεπώς ο κόμβος 4 θα πάρει και αυτός τιμή 4.
+\\
+Τελικά, ο κόμβος 1 αποτιμάται με 4.\\
+\hfill \break
+\begin{forest}
+for tree={circle,draw,l sep=1cm, s sep =0.2 cm,minimum size=1.6em},
+[$4$, my blue label=1
+    [$3$, my blue label=2
+      [$4$ , my blue label=5
+        [$4$, my blue label=11
+        	[$6$, my blue label=23]
+        	[$4$, my blue label=24]
+        ]
+        [$\leq2$, my blue label=12, for tree={l sep=3cm}
+        	[$2$, my blue label=25]
+        	[$9$, my blue label=26, for tree={fill=lightgray}]
+        	[$6$, my blue label=27, for tree={fill=lightgray}]
+        ]
+      ]
+      [$3$ , my blue label=6
+        [$2$, my blue label=13
+        	[$3$, my blue label=28]
+        	[$2$, my blue label=29]
+        ]
+        [$1$, my blue label=14, for tree={l sep=3cm}
+        	[$1$, my blue label=30]
+        ]
+        [$3$, my blue label=15
+        	[$5$, my blue label=31]
+        	[$3$, my blue label=32]
+        ]
+	]
+    ]
+    [$\leq3$, my blue label=3
+      [$\leq3$, my blue label=7
+        [$\leq3$, my blue label=16, for tree={l sep=3cm}
+        	[$3$, my blue label=33]
+        	[$1$, my blue label=34, for tree = {fill=lightgray}]
+        	[$8$, my blue label=35, for tree = {fill=lightgray}]
+        ]
+	]
+      [$$, my blue label=8,for tree={fill=lightgray}
+        [$$, my blue label=17
+        	[$5$, my blue label=36]
+        	[$6$, my blue label=37]
+        ]
+	]
+  ] 
+   [$4$, my blue label=4
+      [$4$, my blue label=9
+        [$4$, my blue label=18, for tree={l sep=3cm}
+        	[$8$, my blue label=38]
+        	[$4$, my blue label=39]
+        	[$6$, my blue label=40]
+        ]
+        [$\leq2$, my blue label=19
+        	[$2$, my blue label=41]
+        	[$9$, my blue label=42, for tree={fill=lightgray}]
+        ]
+	]
+      [$\geq4$, my blue label=10
+        [$4$, my blue label=20,for tree={l sep=3cm}
+        	[$4$, my blue label=43]
+        	[$9$, my blue label=44]
+        ]
+        [$$, my blue label=21, for tree = {fill=lightgray}
+        	[$5$, my blue label=45, for tree = {fill=lightgray}]
+        	[$3$, my blue label=46, for tree = {fill=lightgray}]
+        ]
+        [$$, my blue label=22, for tree = {l sep=3cm,fill=lightgray}
+        	[$3$, my blue label=47,for tree ={fill=lightgray}]
+        	[$1$, my blue label=48, for tree={fill=lightgray}]
+        	[$2$, my blue label=49, for tree={fill=lightgray}]
+        ]
+	]
+  ]
+]
+\end{forest}
+\newpage
+\item Αρχικά σειρά έχει να παίξει ο $max$. Η καλύτερη κίνηση που μπορεί να κάνει είναι να διαλέξει τον κόμβο 4. \\
+Ύστερα, είναι η σειρά του $min$ να παίξει. Η καλύτερη κίνηση που μπορεί να κάνει είναι να διαλέξει αν θα πάει αριστερά (κόμβος 9 $\rightarrow$ $1^\eta$ περίπτωση) ή αν θα πάει δεξιά (κόμβος 10 $\rightarrow$ $2^\eta$ περίπτωση). \\
+ \textbf{$1^\eta$ περίπτωση:}\\
+Σειρά έχει ο $max$ και η καλύτερη κίνηση που μπορεί να κάνει είναι να πάει στον κόμβο 18.\\
+Σειρά έχει ο $min$ και το καλύτερο που μπορεί να κάνει είναι να πάει στον κόμβο 39.\\
+\textbf{ $2^\eta$ περίπτωση:}\\
+Σειρά έχει ο $max$ και η καλύτερη κίνηση που μπορεί να κάνει είναι να πάει στον κόμβο 20.\\
+Σειρά έχει ο $min$ και το καλύτερο που μπορεί να κάνει είναι να πάει στον κόμβο 43.\\
+\end{enumerate}
+
+\end{itemize}
+\end{document}
